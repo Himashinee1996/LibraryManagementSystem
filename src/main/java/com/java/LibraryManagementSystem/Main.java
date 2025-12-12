@@ -35,7 +35,6 @@ public class Main {
         for (LibraryItems libraryItem : libraryItems){
             library.addItem(libraryItem);
         }
-        libraryItems.forEach(library::addItem);
 
         List<User> users = LibraryIO.loadUsersFromFile("userList.lms");
         for (User user : users){
