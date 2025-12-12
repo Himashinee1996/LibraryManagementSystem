@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -138,14 +139,24 @@ public class Main {
                     }
                 User user = new User(userName);
                     library.addUser(user);
+                    
 
-            }else if (mainMenuOptionChoice == 5){
+            } else if (mainMenuOptionChoice == 3) {
+                System.out.println("\n-------------------Borrow an Item---------------\n");
+                System.out.println("Which user would you like to borrow an Item?\n");
+                IntStream.range(0,library.getUserList().size()).forEach(index-> System.out.println(index+"."+library.getUserList().get(index).getName()));
+                int userNameIndex =Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
+                System.out.println("What is the serial number of the item?\n");
+                String itemSerialNumber = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                library.borrowItem(itemSerialNumber,library.getUserList().get(userNameIndex));
+            } else if (mainMenuOptionChoice == 5){
                 exit = true;
             }
         }
 
         LibraryIO.saveItemToFile(library.getLibraryItems(),"itemList.lms");
         LibraryIO.saveUserToFile(library.getUserList(),"userList.lms");
+        LibraryIO.saveBorrowedItems(library.getBorrowedItems(),"borrowedItemList.lms");
 
     }
 }
