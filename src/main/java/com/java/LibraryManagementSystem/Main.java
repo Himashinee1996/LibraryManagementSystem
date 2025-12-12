@@ -105,6 +105,25 @@ public class Main {
 
                     LibraryItems createNewBook = new Book(bookNameStr, autorStr , bookSerialNumberStr);
                     library.addItem(createNewBook);
+
+                } else if (createdItemTypeChoice == 2) {
+                    System.out.println("\n-------------------Create new Magazine---------------\n");
+                    System.out.println("Please enter the title of the magazine");
+                    String magazineNameStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                    System.out.println("Please enter the author of the magazine");
+                    String autorStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                    System.out.println("Please enter the serial number of the magazine");
+                    String magazineSerialNumberStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                    for (LibraryItems libraryItem : library.getLibraryItems()){
+                        if (Objects.equals(libraryItem.getSerialNumber(),magazineSerialNumberStr)){
+                            System.out.println("This Library Item already exist");
+                            continue;
+                        }
+                    }
+
+                    LibraryItems createNewBook = new Book(magazineNameStr, autorStr , magazineSerialNumberStr);
+                    library.addItem(createNewBook);
+
                 }
             }else if (mainMenuOptionChoice == 5){
                 exit = true;
