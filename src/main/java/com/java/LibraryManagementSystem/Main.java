@@ -149,6 +149,16 @@ public class Main {
                 System.out.println("What is the serial number of the item?\n");
                 String itemSerialNumber = new BufferedReader(new InputStreamReader(System.in)).readLine();
                 library.borrowItem(itemSerialNumber,library.getUserList().get(userNameIndex));
+
+            } else if (mainMenuOptionChoice == 4) {
+                System.out.println("\n-------------------Return an Item---------------\n");
+                System.out.println("Which user would you like to return an Item?\n");
+                IntStream.range(0,library.getUserList().size()).forEach(index-> System.out.println(index+"."+library.getUserList().get(index).getName()));
+                int userNameIndex =Integer.parseInt(new BufferedReader(new InputStreamReader(System.in)).readLine());
+                System.out.println("What is the serial number of the item?\n");
+                String itemSerialNumber = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                library.returnBorrowedItem(itemSerialNumber,library.getUserList().get(userNameIndex));
+
             } else if (mainMenuOptionChoice == 5){
                 exit = true;
             }
