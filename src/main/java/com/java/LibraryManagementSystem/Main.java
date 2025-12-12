@@ -57,7 +57,7 @@ public class Main {
         library.getBorrowedItems().forEach((item , user)-> System.out.println(item + " : "+user));
 
         boolean exit = false;
-        while (!exit) {
+        L1:while (!exit) {
             System.out.println("\n Enter main menu option : \n");
             System.out.println("1. Create new item ");
             System.out.println("2. Create new user ");
@@ -74,20 +74,21 @@ public class Main {
                 continue;
             }
 
-            if (mainMenuOptionChoice == 1){
+            if (mainMenuOptionChoice == 1) {
                 System.out.println("\n -----------Create new item ----------\n");
                 System.out.println("Which library item would you like to create?\n");
                 System.out.println("1. Create new Book");
                 System.out.println("2. Create new Magazine");
                 BufferedReader createdItemType = new BufferedReader(new InputStreamReader(System.in));
                 int createdItemTypeChoice;
-                try{
+                try {
                     createdItemTypeChoice = Integer.parseInt(createdItemType.readLine());
                 } catch (IOException e) {
-                    System.out.println("Please enter a valid option" + e.getMessage());;
+                    System.out.println("Please enter a valid option" + e.getMessage());
+                    ;
                     continue;
                 }
-                if (createdItemTypeChoice == 1){
+                if (createdItemTypeChoice == 1) {
                     System.out.println("\n-------------------Create new Book---------------\n");
                     System.out.println("Please enter the title of the book");
                     String bookNameStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
@@ -95,14 +96,14 @@ public class Main {
                     String autorStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
                     System.out.println("Please enter the serial number of the book");
                     String bookSerialNumberStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
-                    for (LibraryItems libraryItem : library.getLibraryItems()){
-                        if (Objects.equals(libraryItem.getSerialNumber(),bookSerialNumberStr)){
+                    for (LibraryItems libraryItem : library.getLibraryItems()) {
+                        if (Objects.equals(libraryItem.getSerialNumber(), bookSerialNumberStr)) {
                             System.out.println("This Library Item already exist");
                             continue;
                         }
                     }
 
-                    LibraryItems createNewBook = new Book(bookNameStr, autorStr , bookSerialNumberStr);
+                    LibraryItems createNewBook = new Book(bookNameStr, autorStr, bookSerialNumberStr);
                     library.addItem(createNewBook);
 
                 } else if (createdItemTypeChoice == 2) {
@@ -113,23 +114,38 @@ public class Main {
                     String autorStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
                     System.out.println("Please enter the serial number of the magazine");
                     String magazineSerialNumberStr = new BufferedReader(new InputStreamReader(System.in)).readLine();
-                    for (LibraryItems libraryItem : library.getLibraryItems()){
-                        if (Objects.equals(libraryItem.getSerialNumber(),magazineSerialNumberStr)){
+                    for (LibraryItems libraryItem : library.getLibraryItems()) {
+                        if (Objects.equals(libraryItem.getSerialNumber(), magazineSerialNumberStr)) {
                             System.out.println("This Library Item already exist");
                             continue;
                         }
                     }
 
-                    LibraryItems createNewBook = new Book(magazineNameStr, autorStr , magazineSerialNumberStr);
-                    library.addItem(createNewBook);
-
+                    LibraryItems createNewMagazine = new Book(magazineNameStr, autorStr, magazineSerialNumberStr);
+                    library.addItem(createNewMagazine);
                 }
+            }
+
+                 else if (mainMenuOptionChoice == 2) {
+                    System.out.println("\n-------------------Create new User---------------\n");
+                    System.out.println("What is the name of the user?");
+                    String userName = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                    for (User user : library.getUserList()) {
+                        if (Objects.equals(user.getName(), userName)) {
+                            System.out.println("This user is already exist");
+                            continue L1;
+                        }
+                    }
+                User user = new User(userName);
+                    library.addUser(user);
+
             }else if (mainMenuOptionChoice == 5){
                 exit = true;
             }
         }
 
         LibraryIO.saveItemToFile(library.getLibraryItems(),"itemList.lms");
+        LibraryIO.saveUserToFile(library.getUserList(),"userList.lms");
 
     }
 }
